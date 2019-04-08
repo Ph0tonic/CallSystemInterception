@@ -1,15 +1,10 @@
-# Definitions de macros
+all: client_SMTP
 
-CC     = g++
-CXXFLAGS = -Wall -std=c++11
-CFILES = helloworld.c
-OFILES = $(CFILES:.cc=.o)
+client_smtp: client_SMTP.o
+	gcc -Wall -o client_SMTP client_SMTP.o
 
-# Definition de la premiere regle
-
-prog: $(OFILES)
-	$(CC) $(OFILES) -o HelloWorld
+client_smtp.o: client_SMTP.c
+	gcc -Wall -c client_SMTP.c -o client_SMTP.o
 
 clean:
-	@echo " *** EFFACE MODULES OBJET ET EXECUTABLE ***"
-	@/bin/rm -f *.o *.x *.c~ *.h~ HelloWorld
+	rm -r *.o

