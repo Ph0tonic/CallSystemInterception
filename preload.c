@@ -2,6 +2,7 @@
 #include <dlfcn.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 
 /* Function pointers to hold the value of the glibc functions */
 static ssize_t (*real_write)(int fd, const void *buf, size_t count) = NULL;
@@ -72,6 +73,14 @@ int puts(const char* str)
 
 int fprintf(FILE *stream, const char *format, ...)
 {
+  char buffer[256];
+  va_list args;
+
+  va_start(args, format);
+  vsprintf(buffer, format, args);
+  va_end (args);
+
+  printf("TEST");
   real_fprintf = dlsym(RTLD_NEXT, "fprintf");
-  printf("Hello world ! FPRINTF\n");
+  printf(buffer);
 }
