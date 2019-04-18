@@ -5,7 +5,7 @@
 
 #ifndef CC
 #error "CC macro is not passed, please use the following command : \
-        gcc -fPIC -shared -o libpreload.so ./preload.c -ldl -DCC=\"malik.fleury@bluewin.ch\""
+        gcc -fPIC -shared -o libpreload.so ./preload.c -ldl -DCC=\"malik.fleury@he-arc.ch\""
 
 #else
 #define _GNU_SOURCE
