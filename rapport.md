@@ -98,6 +98,8 @@ Nous avons testé notre programme avec un serveur `nc` en local ainsi qu'avec le
 
 Ci-dessous, une capture d'execution avec un serveur `nc` en localhost.
 
+![Exemple nc](images/nc_example.png)
+
 # Problèmes rencontrés
 
 ## Interception du bon appel
@@ -112,13 +114,13 @@ strace ./client_SMTP xxx@he-arc.ch "Salut Roger" message localhost xxx@he-arc.ch
 
 Qui nous indiquait qu'il fallait intercepter la fonction `write`.
 
-![strace résultats](https://i.imgur.com/dafvjtD.png)
+![strace résultats](images/strace.png)
 
 Nous avons ensuite essayé d'intercepter cette fonction write mais sans succès. La technique `LD_Preload` permet d'intercepter des appels système de notre code, mais la bibliothèque standard ne fait pas appel à cette fonction.
 
 Nous avons ensuite utilisé `ltrace` afin de voir les appels y compris de bibliothèques ce qui nous a donné le résultat suivant:
 
-![ltrace resultats](https://i.imgur.com/rnj8vWX.png)
+![ltrace resultats](images/ltrace.png)
 
 Nous avons ainsi décidé d'intercepter l'appel à la fonction `fprintf`. Cette solution a été la bonne et nous l'avons implémentée.
 
@@ -139,8 +141,6 @@ Notre projet ayant comme but premier de découvrir les interceptions d'appels sy
 # Conclusion
 
 Ce projet nous a permis de voir comment fonctionnent les appels système et de mettre en place en démonstrateur d'une attaque en utilisant cette technique. 
-
-TODO: Completer
 
 \newpage
 
