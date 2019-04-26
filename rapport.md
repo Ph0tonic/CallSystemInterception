@@ -148,6 +148,6 @@ L'interception d'appels systèmes peut être utiliser dans de nombreux cas et no
 
 \listoffigures
 
-# References
+# Bibliographie
 
-- http://samanbarghi.com/blog/2014/09/05/how-to-wrap-a-system-call-libc-function-in-linux/
+-  http://samanbarghi.com/blog/2014/09/05/how-to-wrap-a-system-call-libc-function-in-linux/, 26 avril 2019, Article sur l'interception d'appels système avec LD_PRELOAD
