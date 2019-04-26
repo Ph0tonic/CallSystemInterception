@@ -1,4 +1,4 @@
-# Interception d'appel sytème
+# Interception d'appel système
 
 Petit projet consistant à intercepter un appel système.
 Ce programme a été développé dans le cadre du cours de sécurité à la HE-ARC.
@@ -37,11 +37,12 @@ LD_PRELOAD=./libpreload.so ./client_SMTP {1} {2} {3} {4} {5} 12000
 ```
 
 Liste des paramètres obligatoires:
-1. Expéditeur
-2. Sujet
-3. Nom du fichier contenant le corps
-4. Adresse du serveur SMTP
-5. Destinataire
+1. Expéditeur;
+2. Sujet;
+3. Nom du fichier contenant le corps;
+4. Adresse du serveur SMTP;
+5. Destinataire.
+
 Le dernier paramètre (12000) est le port, à modifier en fonction des besoins sur netcat et sur le client SMTP.
 
 Exemple:
