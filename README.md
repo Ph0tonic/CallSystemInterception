@@ -16,3 +16,6 @@ http://samanbarghi.com/blog/2014/09/05/how-to-wrap-a-system-call-libc-function-i
 # Rapport
 - Add wrong TCP Packet to hide RCP_TO
 - Seperate RCP_TO byte by byte
+
+To compile:
+- pandoc --filter pandoc-citeproc rapport.md --standalone --to latex --latex-engine xelatex --output rapport.pdf
