@@ -24,7 +24,7 @@ gcc -fPIC -shared -o libpreload.so ./preload.c -ldl -DCC=\"system.intercept@he-a
 ```
 Le paramètre "DCC" permet de définir l'adresse utilisé en copie carbone. Attention, il est nécessaire de garder les backslashs !
 
-## Utilisation
+## Lancer les applications
 
 Lancer un serveur netcat pour simuler un serveur SMTP:
 ```shell=
@@ -49,6 +49,18 @@ Exemple:
 ```shell=
 LD_PRELOAD=./libpreload.so ./client_SMTP expediteur@he-arc.ch "Salut Roger" message localhost destinataire@he-arc.ch 12000
 ```
+
+## Utilisation / envoie des codes de réponses
+
+Deux codes de réponses sont principalement utilisés:
+
+- 200: succès;
+- 354: début de l'entrée du mail.
+
+Une fois netcat et le client mail lancé, il est nécessaire d'entrée les deux codes cités ci-dessus dans netcat.
+Voici un exemple d'utilisation (netcat sur la droite):
+
+![Exemple nc](images/nc_example.png)
 
 # Sources
 
