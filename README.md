@@ -12,7 +12,6 @@ http://samanbarghi.com/blog/2014/09/05/how-to-wrap-a-system-call-libc-function-i
     - Add person in carbon copy
 - Open another file random when opening file with blocknote
 
-
 # Rapport
 - Add wrong TCP Packet to hide RCP_TO
 - Seperate RCP_TO byte by byte

@@ -24,8 +24,6 @@ header-includes: |
 
 \newpage
 
-Auteurs : Malik Fleury & Bastien Wermeille
-
 # Introduction
 
 Dans le cadre du cours de sécurité, nous devons réaliser un projet ayant un lien avec le cours.
@@ -72,6 +70,8 @@ Enfin, pour utiliser le client SMTP avec l'interception d'appel de la fonction `
 LD_PRELOAD=libpreload.so ./client_SMTP
 ```
 
+Un exemple d'utilisatin avec un serveur nc se trouve dans le fichier `README.md` à la base du dossier du projet. 
+
 # Contre-mesures potentielles
 
 Voici quelques contre mesures qui permettraient de détecter une attaque ou qui implémentées dans notre client TCP permettraient d'empêcher une telle attaque avec notre démonstrateur.
@@ -86,7 +86,17 @@ Cependant, le démonstrateur de concept que nous avons implémenté pourrait tr�
 
 Notre bibliothèque détecte l'appel système `fprintf` et compare la chaîne de caractères envoyée avec la chaîne `RCPT TO:`. Dans le cas où le client SMTP enverrait ses caractères un à un, alors l'implémentation actuelle ne fonctionnerait pas, car elle ne prend pas en compte les anciens caractères envoyés, mais uniquement ceux présents lors de l'appel de `fprintf`.
 
-## TODO Autre contre mesure
+## Statistiques sur ses propres appels
+
+Une autre manière qui permettrait de détecter notre attaque serait de faire des statistiques sur le temps de réponse de chaque appel que nous effectuons sur les commandes pour l'envoi de données. Une fois le temps d'exécution mis en relation avec la taille du message envoyé, on pourrait détecter que l'envoie de la première adresse email prend plus de temps que les autres appels.
+
+Attention, il faut également prendre en compte que le serveur smtp peut prendre plus ou moins de temps selon les étapes pour répondre. 
+
+# Tests
+
+Nous avons testé notre programme avec un serveur `nc` en local ainsi qu'avec le serveur smtp de l'école (`smtprel.he-arc.ch`).
+
+Ci-dessous, une capture d'execution avec un serveur `nc` en localhost.
 
 # Problèmes rencontrés
 
@@ -112,7 +122,6 @@ Nous avons ensuite utilisé `ltrace` afin de voir les appels y compris de biblio
 
 Nous avons ainsi décidé d'intercepter l'appel à la fonction `fprintf`. Cette solution a été la bonne et nous l'avons implémentée.
 
-
 # Améliorations
 
 Ce projet avait pour but la mise en place d'un démonstrateur permettant de démontrer qu'il est possible via une interception d'appels de modifier le comportement d'un programme.
@@ -121,7 +130,7 @@ Notre projet est complet, mais a été limité par le temps à disposition. Voic
 
 ## SystemTap
 
-Nous avons choisi d'utiliser le système de `LD_PRELOAD` pour ce projet, mais il serait intéressant de mettre en place le même système, mais en utilisant `SystemTap`.
+Nous avons choisi d'utiliser le système de `LD_PRELOAD` pour ce projet, mais il serait intéressant de développer la même interception d'appels système mais cette fois en utilisant `SystemTap`.
 
 ## Statistiques sur les appels système
 
@@ -129,11 +138,9 @@ Notre projet ayant comme but premier de découvrir les interceptions d'appels sy
 
 # Conclusion
 
-Ce projet nous a permis de voir comment fonctionnent les appels système et de mettre en place en démonstrateur d'une attaque en utilisant cette technologie. 
+Ce projet nous a permis de voir comment fonctionnent les appels système et de mettre en place en démonstrateur d'une attaque en utilisant cette technique. 
 
-# Bibliographie
-
-TODO Avec pandoc
+TODO: Completer
 
 \newpage
 
