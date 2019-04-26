@@ -70,7 +70,7 @@ Enfin, pour utiliser le client SMTP avec l'interception d'appel de la fonction `
 LD_PRELOAD=libpreload.so ./client_SMTP
 ```
 
-Un exemple d'utilisatin avec un serveur nc se trouve dans le fichier `README.md` à la base du dossier du projet. 
+Un exemple d'utilisatin avec un serveur nc se trouve dans le fichier `README.md` à la base du dossier du projet.
 
 # Contre-mesures potentielles
 
@@ -90,7 +90,7 @@ Notre bibliothèque détecte l'appel système `fprintf` et compare la chaîne de
 
 Une autre manière qui permettrait de détecter notre attaque serait de faire des statistiques sur le temps de réponse de chaque appel que nous effectuons sur les commandes pour l'envoi de données. Une fois le temps d'exécution mis en relation avec la taille du message envoyé, on pourrait détecter que l'envoie de la première adresse email prend plus de temps que les autres appels.
 
-Attention, il faut également prendre en compte que le serveur smtp peut prendre plus ou moins de temps selon les étapes pour répondre. 
+Attention, il faut également prendre en compte que le serveur smtp peut prendre plus ou moins de temps selon les étapes pour répondre.
 
 # Tests
 
@@ -140,7 +140,9 @@ Notre projet ayant comme but premier de découvrir les interceptions d'appels sy
 
 # Conclusion
 
-Ce projet nous a permis de voir comment fonctionnent les appels système et de mettre en place en démonstrateur d'une attaque en utilisant cette technique. 
+Ce projet nous a permis de voir comment fonctionnent les appels système et de mettre en place en démonstrateur d'une attaque en utilisant cette technique. Nous avons pris conscience qu'il était relativement simple de modifier le comportement ou de contourner les sécurités d'un programme.
+
+L'interception d'appels systèmes peut être utiliser dans de nombreux cas et nous avons fait qu'effleurer une petite de partie de ce qui est possible de faire.
 
 \newpage
 
@@ -149,4 +151,3 @@ Ce projet nous a permis de voir comment fonctionnent les appels système et de m
 # References
 
 - http://samanbarghi.com/blog/2014/09/05/how-to-wrap-a-system-call-libc-function-in-linux/
-
