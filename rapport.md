@@ -92,6 +92,10 @@ Une autre manière qui permettrait de détecter notre attaque serait de faire de
 
 Attention, il faut également prendre en compte que le serveur smtp peut prendre plus ou moins de temps selon les étapes pour répondre.
 
+## Appels systèmes différents
+
+Lors de la réalisation de ce projet l'étape cruciale a été de trouver le bon appel système, comme expliqué dans le point `Problèmes rencontrés`. Une contre mesure pour cette attaque consisterait à changer d'appels système ou de ne pas utiliser la bibliothèque C standard. Ainsi l'attaquant devra trouver en premier lieu quel appel est utilisé pour pouvoir l'intercepter.
+
 # Tests
 
 Nous avons testé notre programme avec un serveur `nc` en local ainsi qu'avec le serveur smtp de l'école (`smtprel.he-arc.ch`).
