@@ -142,6 +142,10 @@ Nous avons choisi d'utiliser le système de `LD_PRELOAD` pour ce projet, mais il
 
 Notre projet ayant comme but premier de découvrir les interceptions d'appels système, il serait intéressant de faire des statistiques sur les différents appels de programme. Et ensuite, essayer de détecter des programmes dangereux à partir de ces statistiques.
 
+## SSL
+
+L'utilisation d'une bibliothèque SSL permet d'encoder les données passées aux appels système de bas niveau ce qui permet ainsi de sécuriser cette partie. En revanche, il est possible d'intercepter les appels à la bibliothèque SSL avant que les données ne soient chiffrées. `SystemTap` ne fonctionnera pas avec SSL alors que `LD_PRELOAD` peut fonctionner, mais nécessite d'intercepter d'autres fonctions.
+
 # Conclusion
 
 Ce projet nous a permis de voir comment fonctionnent les appels système et de mettre en place en démonstrateur d'une attaque en utilisant cette technique. Nous avons pris conscience qu'il était relativement simple de modifier le comportement ou de contourner les sécurités d'un programme.
